@@ -22,6 +22,24 @@ def get_a_todo(id):
     return Todo.query.filter_by(id=id).first()
 
 
+def update_todo(id, data):
+    todo = Todo.query.filter_by(id=id).first()
+    todo.todo = data['todo']
+    db.session.commit()
+
+    return {
+        'status': 'success',
+        'message': 'Successfully updated.'
+    }, 201
+
+
+def delete_todo(id):
+    todo = Todo.query.filter_by(id=id).first()
+    db.session.delete(todo)
+    db.session.commit()
+    return todo
+
+
 def save_changes(data):
     db.session.add(data)
     db.session.commit()
